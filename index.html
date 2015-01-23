@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://github.com/jodeleeuw/jsPsych/blob/master/jspsych.js"></script>
+    <script type="text/javascript" src="jspsych.js"></script>
   </head>
   <body>
 
@@ -18,7 +18,7 @@
     // outside of mechanical turk, so together, the statement will be true
     // only when in Turk and when the HIT is not accepted yet.
     if (turkInfo.previewMode && !turkInfo.outsideTurk) {
-        $('#turkInfo').html('<a href="128.114.10.35/Adaptation/index.html" target="_blank">Click Here to Start Experiment</a>');
+        $('#turkInfo').html('<a href="//128.114.10.35/Adaptation/index.html" target="_blank">Click Here to Start Experiment</a>');
     }
     </script>
   </body>
