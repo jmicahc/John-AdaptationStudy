@@ -5,7 +5,6 @@
     <script src="jspsych.js"></script>
   </head>
   <body>
-    <img src="ucsc_logo.jpg"></img>
 
     <br> <p> This experiment will take approximately 30 seconds.</p> <br>
     <div id="experiment_link">You must accept the HIT to begin the experiment</div>
@@ -20,8 +19,11 @@
     // The second property, outsideTurk, is true when the page is viewed
     // outside of mechanical turk, so together, the statement will be true
     // only when in Turk and when the HIT is not accepted yet.
-    if (turkInfo.outsideTurk) {
-       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html" target="_blank">Click Here to Start Experiment</a>');
+    if (turkInfo.previewMode && !turkInfo.outsideTurk) {
+       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?wID=' +
+           turkInfo.workerId + "&hitID=" + turkInfo.hitId "&assignId=" + turkInfo.assignId
+           + "&code=" + Math.floor(Math.random() * 10000) +
+           'arget="_blank">Click Here to Start Experiment</a>');
     }
     </script>
   </body>
