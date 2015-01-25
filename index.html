@@ -14,13 +14,15 @@
     // HIT has been accepted.
     var turkInfo = jsPsych.turk.turkInfo();
 
+    console.log('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?wID=' + turkInfo.workerId + "&hitID=" + turkInfo.hitId "&assignId=" + turkInfo.assignId + "&code=" + Math.floor(Math.random() * 10000) + 'arget="_blank">Click Here to Start Experiment</a>'));
+
     // turkInfo.previewMode is true in two cases: when the HIT has not been
     // accepted yet OR when the page is viewed outside of mechanical turk.
     // The second property, outsideTurk, is true when the page is viewed
     // outside of mechanical turk, so together, the statement will be true
     // only when in Turk and when the HIT is not accepted yet.
     if (turkInfo.previewMode && !turkInfo.outsideTurk) {
-       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?wID=' + turkInfo.workerId + "&hitID=" + turkInfo.hitId "&assignId=" + turkInfo.assignId + "&code=" + Math.floor(Math.random() * 10000)) + 'arget="_blank">Click Here to Start Experiment</a>');
+       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?wID=' + turkInfo.workerId + "&hitID=" + turkInfo.hitId "&assignId=" + turkInfo.assignId + "&code=" + Math.floor(Math.random() * 10000) + 'arget="_blank">Click Here to Start Experiment</a>');
     }
     </script>
   </body>
