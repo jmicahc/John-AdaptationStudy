@@ -10,9 +10,12 @@
     <div id="experiment_link">You must accept the HIT to begin the experiment</div>
     <div id="turkInfo"></div>
     <br>
-    
 
+    </p>Enter the code you were given at the end of the experiment:<p>
+    <input type="text" id="code"></input>
     <script>
+
+    console.log(document.getElementById("code").value);
     // jsPsych has a method turkInfo() which can determine whether or not the 
     // HIT has been accepted.
     var turkInfo = jsPsych.turk.turkInfo();
@@ -28,4 +31,3 @@
     </script>
   </body>
 </html>
-
