@@ -9,6 +9,9 @@
     <br> <p> This experiment will take approximately 30 seconds.</p> <br>
     <div id="experiment_link">You must accept the HIT to begin the experiment</div>
     <div id="turkInfo"></div>
+    <br>
+    
+
     <script>
     // jsPsych has a method turkInfo() which can determine whether or not the 
     // HIT has been accepted.
@@ -19,7 +22,8 @@
     // outside of mechanical turk, so together, the statement will be true
     // only when in Turk and when the HIT is not accepted yet.
     if (true) {
-       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?code=' + Math.floor(Math.random() * 1000) + '&target="_blank">Click Here to Start Experiment</a>');
+       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?code=' + Math.floor(Math.random() * 1000) +\
+           '&target="_blank">Click Here to Start Experiment</a>');
     }
     </script>
   </body>
