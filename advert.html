@@ -13,7 +13,18 @@
 
     </p>Enter the code you were given at the end of the experiment:<p>
     <input type="text" id="code"></input>
+    <button onclick='submit()'>Submit</button>
+
     <script>
+
+    var code = "" + Math.floor(Math.random() * 1000);
+    
+    function submit() {
+      var submited_code = document.getElementById("code").value;
+      if (code === submitted_coded) {
+        // Enable "submit hit".
+      }
+    }
 
     console.log(document.getElementById("code").value);
     // jsPsych has a method turkInfo() which can determine whether or not the 
