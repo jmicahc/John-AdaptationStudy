@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="jspsych.js"></script>
+  </head>
+  <body>
+
+    <br> <p> This experiment will take approximately 30 seconds.</p> <br>
+    <div id="experiment_link">You must accept the HIT to begin the experiment</div>
+    <div id="turkInfo"></div>
+    <br>
+
+    </p>Enter the code you were given at the end of the experiment:<p>
+    <input type="text" id="code"></input>
+    <script>
+
+    console.log(document.getElementById("code").value);
+    // jsPsych has a method turkInfo() which can determine whether or not the 
+    // HIT has been accepted.
+    var turkInfo = jsPsych.turk.turkInfo();
+
+    // accepted yet OR when the page is viewed outside of mechanical turk.
+    // The second property, outsideTurk, is true when the page is viewed
+    // outside of mechanical turk, so together, the statement will be true
+    // only when in Turk and when the HIT is not accepted yet.
+    if (true) {
+       $('#turkInfo').html('<a href="http://128.114.10.35/Adaptation/index.html?code=' + Math.floor(Math.random() * 1000) +
+           '&wID=' + turkInfo.workerID + '&target="_blank">Click Here to Start Experiment</a>');
+    }
+    </script>
+  </body>
+</html>
