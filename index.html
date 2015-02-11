@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+    <head>
+        <title>jspsych-survey-likert plugin example</title>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!-- this plugin requires the jQuery UI library and stylesheet -->
+        <!-- these can be loaded from google's servers with the following links -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/black-tie/jquery-ui.min.css" rel="stylesheet" type="text/css"></link>
+        <!-- jsPsych -->
+        <script src="scripts/jspsych.js"></script>
+        <script src="scripts/plugins/jspsych-survey-likert_temp.js"></script>
+        <script src="../jsPsych/scripts/plugins/jspsych-text.js"></script>
+        <!-- style -->
+        <link href="css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    </head>
+
+    <body>
+        <div id="jspsych_target"></div>
+    <script type="text/javascript">
+
+        var fullscreen = function() { 
+            if ($('#consent_checkbox').is(':checked')) {
+                return true;
+            } else {
+                alert("If you with to participate, you must check the box next the the statement 'I agree to participate in this study.'");
+                return false;
+            }
+        };
+
+        // testing query strings. Taken from:
+        // /http://stackoverflow.com/questions/2405355/
+        // how-to-pass-a-parameter-to-a-javascript-through-a-url-and-display-it-on-a-page/ 
+        var surveycode = {};
+        var query = window.location.search.substring(1).split("&");
+        for (var i = 0, max = query.length; i < max; i++)
+        {
+          if (query[i] === "")
+            continue;
+
+          var param = query[i].split("=");
+          surveycode[decodeURIComponent(param[0])] = decodeURIComponent(param[1] || "");
+        }
+        console.log(surveycode['code']);
+        console.log(surveycode['workercode']);
+
+        // Messages
+        var welcome_message = '<div id="instructions"><p>Welcome to the experiment!</p><p>Please rate the following faces. Press enter to continue.</p></p></div>';
+
+        var debrief = '<div id="instructions"><p>You have finished the experiment. Thanks for participating!\
+            Press enter to have your data saved.</ip>';
+
+
+        // defining groups of questions that will go together.
+        var q1 = ["How attractive is this face?"];
+        var q2 = ["How distinctive is this face?"];
+        var q3 = ['How old is this face?'];
+
+        var q4 = ["What gender is this face?"];
+
+        // Stimuli for two conditioon test.
+        var test_images = [['img/male_front.png', 'img/male_front.png', 'img/male_front.png',
+                      'img/neutral_front.png'], ['img/female_front.png', 'img/female_front.png', 'img/female_front.png', 'img/neutral_front.png']];
+      
+        var role = Math.floor(Math.random() * 2);
+        var images = test_images[role];
+        var cond_tags = ['malefront', 'femalefront'];
+
+        // definiting two different response scales that can be used.
+        var scale_1 = ["Not attractive", "Somewhat attractive", "Highly attractive"];
+        var scale_2 = ["Not distinctive", "Somewhat distinctive", "Very distinctive"];
+        var scale_3 = ["20s", "30s", "40s"];
+        var scale_4 = ["Male", "Not sure", "Female"];
+
+        console.log(images);
+        var likert_block = {
+            type: 'survey-likert',
+            stimuli: images,
+            questions: [q1, q2, q3, q4],
+            labels: [[scale_1], [scale_2], [scale_3], [scale_4]], // need one scale for every question on a page
+            intervals: [[scale_1.length], [scale_2.length], [scale_3.length], [scale_4.length]] // note the the intervals and labels don't necessarily need to match.
+        };
+
+        var welcome_block = {
+               type: 'text',
+               text: [welcome_message],
+               timing_post_trial: 0
+            };
+        // debriefing block shown after experiment.
+        var debrief_block = {
+             type: "text",
+             text: [debrief]
+        };
+
+
+        // launch jspsych experiment
+        jsPsych.init({
+            display_element: $('#jspsych_target'),
+            experiment_structure: [welcome_block, likert_block],
+            on_finish: function(data) {
+               document.getElementById("jspsych_target").innerHTML = "Thanks for participating! Your completion code is: " + surveycode['code'];
+               var filename = "test" + new Date().getTime() + '_' + surveycode['workercode'] + "_" + cond_tags[role] + ".csv";
+               var filedata = jsPsych.dataAsCSV();
+
+               console.log("saving data");
+               console.log(filename + " " + filedata);
+               $.ajax( {
+                  type:'post',
+                  cache: false,
+                  url: 'save_data.php', // this is the path to the above PHP script
+                  data: {filename: filename, filedata: filedata}
+               });
+             }
+        });
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-50563838-1', 'jspsych.org');
+      ga('send', 'pageview');
+    </script>
+    </body>
+
+</html>
